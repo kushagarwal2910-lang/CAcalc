@@ -145,20 +145,122 @@
                     </div>
                 </div>
 
-            </div>
+                <!-- SEO Content Section -->
+                <section
+                    class="mt-12 bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300 prose dark:prose-invert max-w-none">
+                    <article>
+                        <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">What is Reverse GST Calculation?
+                        </h2>
+                        <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                            A <strong>Reverse GST Calculator</strong> is a tool designed to <strong>calculate GST from
+                                total amount</strong>. Often, vendors or freelancers quote a final price that is
+                            "inclusive of taxes". To file your returns or claim Input Tax Credit (ITC), you need to
+                            separate the original base cost and the tax component. This process is called reverse
+                            calculation or back-calculation of GST.
+                        </p>
 
-            <!-- Sidebar -->
-            <div class="lg:col-span-1">
-                <!-- Ad Placeholder: Sidebar Start -->
-                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
-            </div>
+                        <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Reverse GST Calculation Formula
+                            India</h2>
+                        <p class="text-slate-600 dark:text-slate-300 mb-4">
+                            The math behind removing tax from an inclusive amount is straightforward but can be tricky
+                            to do mentally.
+                        </p>
+                        <div
+                            class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border-l-4 border-purple-500 mb-6 text-sm font-mono text-purple-900 dark:text-purple-200">
+                            Base Amount = Total Amount / (1 + (GST Rate / 100))<br>
+                            GST Amount = Total Amount - Base Amount
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 mb-6">
+                            For example, if you paid <strong>₹118</strong> for a service (taxed at 18%), the base amount
+                            is ₹118 / 1.18 = <strong>₹100</strong>, and the GST is ₹18.
+                        </p>
 
-        </div>
+                        <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Current GST Rates for 2026</h2>
+                        <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 mb-6 space-y-2">
+                            <li><strong>5%:</strong> Essential goods, food items, transport services.</li>
+                            <li><strong>12%:</strong> Computers, processed food, some electronics.</li>
+                            <li><strong>18%:</strong> Most services (IT, Telecom, Professional fees), standard
+                                electronics. This is the most common rate for freelancers.</li>
+                            <li><strong>28%:</strong> Luxury goods, automobiles, cement.</li>
+                        </ul>
+                        <p class="text-slate-600 dark:text-slate-300 mb-6">
+                            Need to check your eligible credits? Use our <a href="gst-itc.html"
+                                class="text-purple-600 hover:text-purple-500 underline">Input Tax Credit (ITC)
+                                Calculator</a>.
+                        </p>
+
+                        <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Frequently Asked Questions (FAQ)
+                        </h2>
+                        <div class="space-y-4">
+                            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                                <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">How do I calculate GST
+                                    if the rate is 18%?</h3>
+                                <p class="text-slate-600 dark:text-slate-300">Simply divide the total inclusive amount
+                                    by 1.18. The result is your pre-tax base amount.</p>
+                            </div>
+                            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                                <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Why is reverse
+                                    calculation important for businesses?</h3>
+                                <p class="text-slate-600 dark:text-slate-300">It ensures accurate accounting. Recording
+                                    an inclusive amount as revenue without separating GST leads to inflating your
+                                    turnover and paying incorrect taxes.</p>
+                            </div>
+                            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                                <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">What if I missed filing
+                                    my return?</h3>
+                                <p class="text-slate-600 dark:text-slate-300">You might be liable for a penalty. Check
+                                    the estimated amount with our <a href="gst-late-fee.html"
+                                        class="text-purple-600 hover:text-purple-500 underline">GST Late Fee
+                                        Calculator</a>.</p>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- JSON-LD Schema for FAQs -->
+                <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  "mainEntity": [{
+                    "@type": "Question",
+                    "name": "How do I calculate GST if the rate is 18%?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Simply divide the total inclusive amount by 1.18. The result is your pre-tax base amount."
+                    }
+                  }, {
+                    "@type": "Question",
+                    "name": "Why is reverse calculation important for businesses?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "It ensures accurate accounting. Recording an inclusive amount as revenue without separating GST leads to inflating your turnover and paying incorrect taxes."
+                    }
+                  }, {
+                    "@type": "Question",
+                    "name": "What if I missed filing my return?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "You might be liable for a penalty. Check the estimated amount with our GST Late Fee Calculator."
+                    }
+                  }]
+                }
+                </script>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <!-- Ad Placeholder: Sidebar Start -->
+                    <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+                </div>
+
+            </div>
     </main>
 
     <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <p>&copy; 2026 CAcalc. All rights reserved.</p>
+            <p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.
+            </p>
             <div class="mt-4 space-x-4 text-sm">
                 <a href="about.html" class="hover:text-white transition">About Us</a>
                 <a href="contact.html" class="hover:text-white transition">Contact</a>

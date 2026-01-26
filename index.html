@@ -458,33 +458,26 @@
                 let title = item.querySelector('h3').innerText.toLowerCase();
                 let desc = item.querySelector('.tool-desc').innerText.toLowerCase();
                 if (title.includes(filter) || desc.includes(filter)) {
-                    item.parentElement.style.display = ""; // Reset link wrapper
-                    item.style.display = "";
+                    item.style.display = ""; // Show matching item
                 } else {
-                    item.parentElement.style.display = "none";
-                    item.style.display = "none";
+                    item.style.display = "none"; // Hide non-matching item
                 }
             });
 
             // Hide Empty Sections
             document.querySelectorAll('.tool-category').forEach(function (section) {
-                let visibleItems = section.querySelectorAll('.tool-item:not([style*="display: none"])');
-                // Check if any direct tool-items are visible
+                // Check if any tool-items in this section are visible
                 let hasVisible = false;
                 section.querySelectorAll('.tool-item').forEach(item => {
                     if (item.style.display !== "none") hasVisible = true;
                 });
 
                 if (!hasVisible) {
-                    section.style.display = "none";
+                    section.classList.add('hidden'); // Use class to hide
+                    section.style.display = 'none'; // Fallback
                 } else {
-                    section.style.display = "";
-                    // Special check if all items are hidden by filter in this category
-                    let anyVisible = false;
-                    section.querySelectorAll('.tool-item').forEach(item => {
-                        if (item.style.display !== "none" && item.parentElement.style.display !== "none") anyVisible = true;
-                    });
-                    if (!anyVisible) section.style.display = "none";
+                    section.classList.remove('hidden');
+                    section.style.display = '';
                 }
             });
         }
