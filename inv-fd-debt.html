@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FD vs Debt Fund - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        orange: '#ea580c',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="sip-step-up.html" class="text-orange-400">Investments</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">FD vs Debt Fund Analyzer</h1>
+                <p class="text-slate-500 dark:text-slate-400">Compare real post-tax returns based on your income tax
+                    slab.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Investment
+                                Amount (₹)</label>
+                            <input type="number" id="amount"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">FD Rate
+                                    (%)</label>
+                                <input type="number" id="rateFD"
+                                    class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                    placeholder="7.0">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Debt
+                                    Fund Rate (%)</label>
+                                <input type="number" id="rateDebt"
+                                    class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                    placeholder="7.5">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Your Tax
+                                Bracket</label>
+                            <select id="bracket"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                                <option value="0">0% (No Tax)</option>
+                                <option value="10.4">10% (+Cess)</option>
+                                <option value="20.8">20% (+Cess)</option>
+                                <option value="31.2">30% (+Cess)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+                    <button onclick="compareReturns()"
+                        class="w-full btn-premium btn-orange text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">Compare
+                        Results</button>
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid values.</div>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-6 rounded-xl shadow-xl border border-slate-700 grid grid-cols-2 gap-4 text-center">
+                    <div class="p-4 bg-slate-800 rounded-lg">
+                        <p class="text-slate-400 text-sm">FD Post-Tax</p>
+                        <p class="text-2xl font-bold text-white mt-1" id="res-fd">0%</p>
+                        <p class="text-xs text-slate-500 mt-1" id="val-fd">₹0</p>
+                    </div>
+                    <div class="p-4 bg-slate-800 rounded-lg border border-slate-600">
+                        <p class="text-slate-400 text-sm">Debt Fund Post-Tax</p>
+                        <p class="text-2xl font-bold text-orange-400 mt-1" id="res-debt">0%</p>
+                        <p class="text-xs text-slate-500 mt-1" id="val-debt">₹0</p>
+                    </div>
+                    <div class="col-span-2 text-xs text-slate-400 mt-2">
+                        *Note: Debt Funds purchased after April 1, 2023 are taxed at slab rates (same as FD). No
+                        indexation benefit.
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function compareReturns() {
+            let amt = parseFloat(document.getElementById('amount').value) || 0;
+            let rFD = parseFloat(document.getElementById('rateFD').value) || 0;
+            let rDebt = parseFloat(document.getElementById('rateDebt').value) || 0;
+            let tax = parseFloat(document.getElementById('bracket').value) || 0;
+
+            if (amt <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden'); return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            // Both are taxed at slab rate now (Post Finance Bill 2023)
+            // Effective Output = Rate * (1 - Tax%)
+
+            let effFD = rFD * (1 - tax / 100);
+            let effDebt = rDebt * (1 - tax / 100);
+
+            let valFD = amt * (1 + effFD / 100); // 1 year assumption for rate comparison
+            let valDebt = amt * (1 + effDebt / 100); // 1 year
+
+            const fmt = (v) => "₹" + Math.round(v).toLocaleString('en-IN');
+
+            document.getElementById('res-fd').innerText = effFD.toFixed(2) + "%";
+            document.getElementById('res-debt').innerText = effDebt.toFixed(2) + "%";
+
+            document.getElementById('val-fd').innerText = "Return: " + fmt(valFD - amt);
+            document.getElementById('val-debt').innerText = "Return: " + fmt(valDebt - amt);
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

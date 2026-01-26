@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer 44ADA Tax Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        blue: '#2563eb',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="sip-step-up.html" class="hover:text-emerald-400 transition">SIP Step-Up</a>
+                <a href="tax-44ada.html" class="text-blue-400">Tax 44ADA</a>
+                <a href="gst-reverse.html" class="hover:text-emerald-400 transition">GST</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Ad Placeholder: Top -->
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Calculator Section -->
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">Freelancer Tax Calculator (44ADA)</h1>
+                <p class="text-slate-500 dark:text-slate-400">Calculate taxes for Freelancers/Professionals under
+                    Presumptive Scheme (FY 2025-26 New Regime).</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Total
+                                Annual Receipts (₹)</label>
+                            <input type="number" id="annualReceipts"
+                                class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                placeholder="e.g. 1500000">
+                            <p class="text-xs text-slate-400 mt-1">Total revenue earned in the financial year.</p>
+                        </div>
+                    </div>
+
+                    <!-- Ad Placeholder: In-Content -->
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+
+                    <button onclick="calculateTax()"
+                        class="w-full btn-premium btn-blue text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">
+                        Calculate Tax
+                    </button>
+
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter a valid positive revenue
+                        amount.</div>
+                </div>
+
+                <!-- Results Card -->
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm2 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+
+                    <h2 class="text-xl font-semibold mb-6 border-b border-slate-600 pb-2">Tax Calculation Summary</h2>
+
+                    <div class="space-y-4 relative z-10">
+                        <div class="flex justify-between items-center pb-2 border-b border-slate-700/50">
+                            <span class="text-slate-300">Annual Revenue</span>
+                            <span class="text-xl font-bold" id="res-revenue">₹0</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-2 border-b border-slate-700/50">
+                            <span class="text-slate-300">Presumptive Income (50%)</span>
+                            <span class="text-xl font-bold text-emerald-400" id="res-income">₹0</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-2 border-b border-slate-700/50">
+                            <span class="text-slate-300">Tax Payable (New Slabs)</span>
+                            <span class="text-white font-semibold" id="res-tax-base">₹0</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-2 border-b border-slate-700/50">
+                            <span class="text-slate-300">Health & Education Cess (4%)</span>
+                            <span class="text-white font-semibold" id="res-cess">₹0</span>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-lg font-bold text-white">Total Tax Payable</span>
+                            <span class="text-3xl font-bold text-blue-400" id="res-total-tax">₹0</span>
+                        </div>
+
+                        <div class="bg-slate-800/50 rounded p-3 mt-4 text-center">
+                            <p class="text-sm text-slate-400">Effective Tax Rate on Revenue</p>
+                            <p class="text-xl font-bold text-white" id="res-effective-rate">0%</p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-end pt-4 mt-6 border-t border-slate-700 no-print">
+                        <button onclick="window.print()"
+                            class="flex items-center text-sm font-medium text-slate-300 hover:text-white transition">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                            Download Report
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Ad Placeholder: Sidebar Start -->
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About Us</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Use</a>
+            </div>
+            <p class="text-xs mt-4 text-slate-500">Professional Financial Tools for Indian Market.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateTax() {
+            let revenue = parseFloat(document.getElementById('annualReceipts').value);
+
+            if (isNaN(revenue) || revenue <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden');
+                document.getElementById('result-card').classList.add('hidden');
+                return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            // 1. Presumptive Income
+            let income = revenue * 0.50;
+
+            // 2. Tax Calculation Logic (FY 2025-26 New Regime Slabs)
+            let tax = 0;
+            // Slabs: 0-3L (0%), 3-7L (5%), 7-10L (10%), 10-12L (15%), 12-15L (20%), >15L (30%)
+
+            let taxableIncome = income;
+
+            // Rebate u/s 87A: If Taxable Income <= 7L, Tax is 0.
+
+            let tempIncome = taxableIncome;
+
+            // 0-3L
+            if (tempIncome > 300000) {
+                // 3L to 7L @ 5%
+                let slab2 = Math.min(tempIncome, 700000) - 300000;
+                tax += slab2 * 0.05;
+            }
+
+            if (tempIncome > 700000) {
+                // 7L to 10L @ 10%
+                let slab3 = Math.min(tempIncome, 1000000) - 700000;
+                tax += slab3 * 0.10;
+            }
+
+            if (tempIncome > 1000000) {
+                // 10L to 12L @ 15%
+                let slab4 = Math.min(tempIncome, 1200000) - 1000000;
+                tax += slab4 * 0.15;
+            }
+
+            if (tempIncome > 1200000) {
+                // 12L to 15L @ 20%
+                let slab5 = Math.min(tempIncome, 1500000) - 1200000;
+                tax += slab5 * 0.20;
+            }
+
+            if (tempIncome > 1500000) {
+                // > 15L @ 30%
+                let slab6 = tempIncome - 1500000;
+                tax += slab6 * 0.30;
+            }
+
+            // Rebate 87A Check (New Regime FY 25-26 limit is 7L)
+            if (taxableIncome <= 700000) {
+                tax = 0;
+            }
+
+            let cess = tax * 0.04;
+            let totalTax = tax + cess;
+
+            let effectiveRate = (totalTax / revenue) * 100;
+
+            const formatCurr = (val) => "₹" + Math.round(val).toLocaleString('en-IN');
+
+            document.getElementById('res-revenue').innerText = formatCurr(revenue);
+            document.getElementById('res-income').innerText = formatCurr(income);
+            document.getElementById('res-tax-base').innerText = formatCurr(tax);
+            document.getElementById('res-cess').innerText = formatCurr(cess);
+            document.getElementById('res-total-tax').innerText = formatCurr(totalTax);
+            document.getElementById('res-effective-rate').innerText = effectiveRate.toFixed(2) + "%";
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

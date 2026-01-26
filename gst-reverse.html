@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Reverse Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        purple: '#9333ea',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="sip-step-up.html" class="hover:text-emerald-400 transition">SIP Step-Up</a>
+                <a href="tax-44ada.html" class="hover:text-emerald-400 transition">Tax 44ADA</a>
+                <a href="gst-reverse.html" class="text-purple-400 transition">GST</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Ad Placeholder: Top -->
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Calculator Section -->
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">GST Reverse Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Instantly calculate exclusive base amount and GST
+                    component from the total inclusive price.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Total
+                                Amount (Inclusive of GST) ₹</label>
+                            <input type="number" id="totalAmount"
+                                class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition"
+                                placeholder="e.g. 11800">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">GST Rate
+                                (%)</label>
+                            <div class="grid grid-cols-4 gap-4">
+                                <!-- Radio buttons for rates -->
+                                <button onclick="selectRate(5)"
+                                    class="rate-btn p-3 border border-slate-300 dark:border-slate-600 dark:text-slate-300 rounded-lg text-center hover:bg-purple-50 dark:hover:bg-purple-900/30 focus:ring-2 focus:ring-purple-500 transition"
+                                    data-rate="5">5%</button>
+                                <button onclick="selectRate(12)"
+                                    class="rate-btn p-3 border border-slate-300 dark:border-slate-600 dark:text-slate-300 rounded-lg text-center hover:bg-purple-50 dark:hover:bg-purple-900/30 focus:ring-2 focus:ring-purple-500 transition"
+                                    data-rate="12">12%</button>
+                                <button onclick="selectRate(18)"
+                                    class="rate-btn p-3 border border-slate-300 bg-purple-100 dark:bg-purple-900/50 border-purple-500 text-purple-700 dark:text-purple-300 font-bold rounded-lg text-center hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 transition"
+                                    data-rate="18">18%</button>
+                                <button onclick="selectRate(28)"
+                                    class="rate-btn p-3 border border-slate-300 dark:border-slate-600 dark:text-slate-300 rounded-lg text-center hover:bg-purple-50 dark:hover:bg-purple-900/30 focus:ring-2 focus:ring-purple-500 transition"
+                                    data-rate="28">28%</button>
+                            </div>
+                            <input type="hidden" id="gstRate" value="18">
+                        </div>
+                    </div>
+
+                    <!-- Ad Placeholder: In-Content -->
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+
+                    <button onclick="calculateGST()"
+                        class="w-full btn-premium btn-purple text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">
+                        Calculate Breakup
+                    </button>
+
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid values.</div>
+                </div>
+
+                <!-- Results Card -->
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4s0 0 0 0zm1 2h2v2H7v-2zm4 0h2v2h-2v-2z">
+                            </path>
+                        </svg>
+                    </div>
+
+                    <h2 class="text-xl font-semibold mb-6 border-b border-slate-600 pb-2">Price Breakup</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10 mb-6">
+                        <div>
+                            <p class="text-slate-400 text-sm mb-1">Base Amount (Excl. Tax)</p>
+                            <p class="text-2xl font-bold text-white" id="res-base">₹0</p>
+                        </div>
+                        <div>
+                            <p class="text-purple-400 text-sm mb-1">GST Component (<span
+                                    id="res-rate-display">18</span>%)</p>
+                            <p class="text-2xl font-bold text-purple-400" id="res-gst">₹0</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-300">Total Amount Paid</span>
+                            <span class="text-3xl font-bold text-white" id="res-total">₹0</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-4 mt-6 border-t border-slate-700 no-print">
+                        <button onclick="window.print()"
+                            class="flex items-center text-sm font-medium text-slate-300 hover:text-white transition">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                            Download Report
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Ad Placeholder: Sidebar Start -->
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About Us</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Use</a>
+            </div>
+            <p class="text-xs mt-4 text-slate-500">Professional Financial Tools for Indian Market.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Rate Selection Logic
+        function selectRate(rate) {
+            document.getElementById('gstRate').value = rate;
+
+            // UI Toggle
+            document.querySelectorAll('.rate-btn').forEach(btn => {
+                // Reset styles
+                btn.className = 'rate-btn p-3 border border-slate-300 dark:border-slate-600 dark:text-slate-300 rounded-lg text-center hover:bg-purple-50 dark:hover:bg-purple-900/30 focus:ring-2 focus:ring-purple-500 transition';
+
+                if (parseInt(btn.dataset.rate) === rate) {
+                    // Active styles
+                    btn.className = 'rate-btn p-3 border border-slate-300 bg-purple-100 dark:bg-purple-900/50 border-purple-500 text-purple-700 dark:text-purple-300 font-bold rounded-lg text-center hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 transition';
+                    btn.classList.remove('border-slate-300');
+                }
+            });
+        }
+
+        function calculateGST() {
+            let total = parseFloat(document.getElementById('totalAmount').value);
+            let rate = parseFloat(document.getElementById('gstRate').value);
+
+            if (isNaN(total) || total <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden');
+                document.getElementById('result-card').classList.add('hidden');
+                return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            // Logic: Base = Total / (1 + Rate/100)
+            let base = total / (1 + (rate / 100));
+            let gst = total - base;
+
+            const formatCurr = (val) => "₹" + val.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            document.getElementById('res-base').innerText = formatCurr(base);
+            document.getElementById('res-gst').innerText = formatCurr(gst);
+            document.getElementById('res-total').innerText = formatCurr(total);
+            document.getElementById('res-rate-display').innerText = rate;
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

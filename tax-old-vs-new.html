@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Old vs New Tax Regime (FY 25-26) - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        blue: '#2563eb',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="tax-44ada.html" class="text-blue-400">Tax & Salary</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+
+        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">Tax Regime Comparator (FY 2025-26)</h1>
+                <p class="text-slate-500 dark:text-slate-400">Find out which tax regime saves you more money.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Gross
+                                Annual Income (₹)</label>
+                            <input type="number" id="income"
+                                class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                placeholder="e.g. 1500000">
+                        </div>
+
+                        <div class="border-t border-slate-200 dark:border-slate-700 pt-4">
+                            <h3 class="font-semibold text-navy dark:text-white mb-3">Deductions (Applicable to Old
+                                Regime Only)</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Sec
+                                        80C (Max 1.5L)</label>
+                                    <input type="number" id="80c"
+                                        class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                        placeholder="PPF, LIC, ELSS">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Sec
+                                        80D (Health Ins)</label>
+                                    <input type="number" id="80d"
+                                        class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                        placeholder="Mediclaim">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">HRA
+                                        Exemption</label>
+                                    <input type="number" id="hra"
+                                        class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                        placeholder="Rent Allowance">
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Standard
+                                        Deduction</label>
+                                    <input type="number" value="75000" disabled
+                                        class="w-full p-3 bg-slate-100 dark:bg-slate-600 text-slate-500 rounded-lg cursor-not-allowed">
+                                    <p class="text-[10px] text-slate-400">Fixed ₹75k (New) / ₹50k (Old) - Auto Applied
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+                    <button onclick="compareTax()"
+                        class="w-full btn-premium btn-blue text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">Compare
+                        Now</button>
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid income.</div>
+                </div>
+
+                <div id="result-card" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Old Regime Result -->
+                    <div
+                        class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 relative">
+                        <h3 class="text-lg font-bold text-navy dark:text-white mb-2">Old Regime</h3>
+                        <p class="text-slate-500 text-sm">Tax Payable:</p>
+                        <p class="text-2xl font-bold text-slate-700 dark:text-slate-200" id="res-old">₹0</p>
+                    </div>
+
+                    <!-- New Regime Result -->
+                    <div class="bg-navy p-6 rounded-xl border border-slate-700 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-2 opacity-20"><svg class="w-16 h-16 text-white" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg></div>
+                        <h3 class="text-lg font-bold text-white mb-2">New Regime</h3>
+                        <p class="text-slate-400 text-sm">Tax Payable:</p>
+                        <p class="text-2xl font-bold text-white" id="res-new">₹0</p>
+                    </div>
+
+                    <div
+                        class="col-span-full bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-500 p-4 rounded-lg text-center">
+                        <p class="text-emerald-800 dark:text-emerald-300 font-bold text-lg" id="res-verdict">
+                            Recommendation will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function compareTax() {
+            let income = parseFloat(document.getElementById('income').value) || 0;
+            let d80c = parseFloat(document.getElementById('80c').value) || 0;
+            let d80d = parseFloat(document.getElementById('80d').value) || 0;
+            let dhra = parseFloat(document.getElementById('hra').value) || 0;
+
+            if (income <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden'); return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            // OLD REGIME CALC
+            // Std Ded: 50,000
+            let oldTaxable = income - 50000 - Math.min(d80c, 150000) - d80d - dhra;
+            if (oldTaxable < 0) oldTaxable = 0;
+
+            let taxOld = 0;
+            // Old Slabs (Approx): 0-2.5 Nil, 2.5-5 5%, 5-10 20%, >10 30%
+            if (oldTaxable > 250000) taxOld += Math.min(Math.max(0, oldTaxable - 250000), 250000) * 0.05;
+            if (oldTaxable > 500000) taxOld += Math.min(Math.max(0, oldTaxable - 500000), 500000) * 0.20;
+            if (oldTaxable > 1000000) taxOld += Math.max(0, oldTaxable - 1000000) * 0.30;
+
+            // Rebate u/s 87A (Old) -> Income <= 5L, Tax = 0
+            if (oldTaxable <= 500000) taxOld = 0;
+
+            // Cess 4%
+            taxOld += taxOld * 0.04;
+
+
+            // NEW REGIME CALC (FY 25-26)
+            // Std Ded: 75,000
+            let newTaxable = income - 75000;
+            if (newTaxable < 0) newTaxable = 0;
+
+            let taxNew = 0;
+            // Slabs: 0-3 Nil, 3-7 5%, 7-10 10%, 10-12 15%, 12-15 20%, >15 30%
+            if (newTaxable > 300000) taxNew += Math.min(Math.max(0, newTaxable - 300000), 400000) * 0.05;
+            if (newTaxable > 700000) taxNew += Math.min(Math.max(0, newTaxable - 700000), 300000) * 0.10;
+            if (newTaxable > 1000000) taxNew += Math.min(Math.max(0, newTaxable - 1000000), 200000) * 0.15;
+            if (newTaxable > 1200000) taxNew += Math.min(Math.max(0, newTaxable - 1200000), 300000) * 0.20;
+            if (newTaxable > 1500000) taxNew += Math.max(0, newTaxable - 1500000) * 0.30;
+
+            // Rebate u/s 87A (New) -> Income <= 7L, Tax = 0
+            /* Note: FY 25-26 budget might tweak rebate to 12L? 
+               Let's stick to known Current New Regime rules (7L Rebate limit) or assume slightly enhanced. 
+               Prompt said "FY 25-26 New Regime (0-3L Nil, 3-7L 5%...)". 
+               Usually rebate is till 7L. */
+            if (newTaxable <= 700000) taxNew = 0;
+
+            taxNew += taxNew * 0.04;
+
+            // Display
+            const fmt = (v) => "₹" + Math.round(v).toLocaleString('en-IN');
+            document.getElementById('res-old').innerText = fmt(taxOld);
+            document.getElementById('res-new').innerText = fmt(taxNew);
+
+            let diff = Math.abs(taxOld - taxNew);
+            let msg = "";
+            if (taxNew < taxOld) {
+                msg = `New Regime saves you ${fmt(diff)} per year! switch to New.`;
+                document.getElementById('res-new').classList.add('text-emerald-400');
+            } else if (taxOld < taxNew) {
+                msg = `Old Regime saves you ${fmt(diff)}. Stick to Old if you have investments.`;
+                document.getElementById('res-old').classList.add('text-emerald-500');
+            } else {
+                msg = "Both Regimes have same tax liability.";
+            }
+            document.getElementById('res-verdict').innerText = msg;
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

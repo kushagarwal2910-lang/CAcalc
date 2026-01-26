@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prepayment Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        orange: '#ea580c',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="sip-step-up.html" class="text-orange-400">Investments</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">Loan Prepayment Saver</h1>
+                <p class="text-slate-500 dark:text-slate-400">See how much interest you save by prepaying part of your
+                    loan today.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Outstanding
+                                Principal (₹)</label>
+                            <input type="number" id="principal"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Interest
+                                Rate (%)</label>
+                            <input type="number" id="rate"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Remaining
+                                Tenure (Months)</label>
+                            <input type="number" id="months"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Prepayment
+                                Amount (₹)</label>
+                            <input type="number" id="prepay"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                    </div>
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+                    <button onclick="calculateSavings()"
+                        class="w-full btn-premium btn-orange text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">Calculate
+                        Savings</button>
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid values.</div>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700 text-center">
+                    <p class="text-slate-400 text-sm uppercase tracking-wide">Total Interest Saved</p>
+                    <h2 class="text-5xl font-bold text-emerald-400 mt-2" id="res-saved">₹0</h2>
+                    <p class="text-sm text-slate-300 mt-4">Tenure Reduced by: <span id="res-months-saved"
+                            class="font-bold text-white">0</span> months</p>
+                </div>
+            </div>
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateSavings() {
+            let P = parseFloat(document.getElementById('principal').value) || 0;
+            let R = parseFloat(document.getElementById('rate').value) || 0;
+            let N = parseFloat(document.getElementById('months').value) || 0;
+            let prepay = parseFloat(document.getElementById('prepay').value) || 0;
+
+            if (P <= 0 || R <= 0 || N <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden'); return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            let r = R / 12 / 100;
+
+            // 1. Current EMI
+            // EMI = P * r * (1+r)^N / ((1+r)^N - 1)
+            let emi = (P * r * Math.pow(1 + r, N)) / (Math.pow(1 + r, N) - 1);
+
+            let totalInterestOld = (emi * N) - P;
+
+            // 2. New Scenario
+            let newP = P - prepay;
+            if (newP <= 0) {
+                // Full paid off
+                document.getElementById('res-saved').innerText = "₹" + Math.round(totalInterestOld).toLocaleString('en-IN');
+                document.getElementById('res-months-saved').innerText = N;
+                document.getElementById('result-card').classList.remove('hidden');
+                return;
+            }
+
+            // Keep EMI same, reduce tenure
+            // N_new = log(EMI / (EMI - P*r)) / log(1+r)
+            let num = emi;
+            let den = emi - (newP * r);
+            let nNew = Math.log(num / den) / Math.log(1 + r);
+
+            let totalInterestNew = (emi * nNew) - newP;
+
+            let saved = totalInterestOld - totalInterestNew;
+            let monthsSaved = N - nNew;
+
+            const fmt = (v) => "₹" + Math.round(v).toLocaleString('en-IN');
+            document.getElementById('res-saved').innerText = fmt(saved);
+            document.getElementById('res-months-saved').innerText = Math.round(monthsSaved);
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

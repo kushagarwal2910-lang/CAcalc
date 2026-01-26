@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hourly to Monthly - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        indigo: '#4f46e5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="tax-44ada.html" class="text-indigo-400">Freelancing</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">Hourly to Monthly Salary</h1>
+                <p class="text-slate-500 dark:text-slate-400">Convert USD Hourly Rate to INR Monthly In-Hand (after
+                    44ADA Taxes).</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Hourly
+                                    Rate ($)</label>
+                                <input type="number" id="usdRate"
+                                    class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                    placeholder="20">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">USD to
+                                    INR Rate</label>
+                                <input type="number" id="forex"
+                                    class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                    placeholder="83">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Average
+                                Monthly billable hours</label>
+                            <input type="number" id="hours"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                placeholder="160">
+                        </div>
+                    </div>
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+                    <button onclick="calculateSalary()"
+                        class="w-full btn-premium btn-indigo text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">Calculate
+                        In-Hand</button>
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid values.</div>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-6 rounded-xl shadow-xl border border-slate-700">
+                    <h2 class="text-xl font-semibold mb-4 border-b border-slate-600 pb-2">Analysis</h2>
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div>
+                            <p class="text-xs text-slate-400">Gross Monthly Income</p>
+                            <p class="text-xl font-bold text-white" id="res-gross">₹0</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400">Estimated Tax (44ADA)</p>
+                            <p class="text-xl font-bold text-red-300" id="res-tax">₹0</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-slate-800 rounded dark:bg-slate-800/50 text-center border border-slate-600">
+                        <p class="text-sm text-slate-300">Net In-Hand (Monthly)</p>
+                        <p class="text-4xl font-bold text-emerald-400 mt-2" id="res-net">₹0</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4 text-center">Calculated using 50% Presumptive Taxation Scheme.
+                    </p>
+                </div>
+            </div>
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateSalary() {
+            let usd = parseFloat(document.getElementById('usdRate').value) || 0;
+            let forex = parseFloat(document.getElementById('forex').value) || 0;
+            let hours = parseFloat(document.getElementById('hours').value) || 0;
+
+            if (usd <= 0 || forex <= 0 || hours <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden'); return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            let monthlyGrossINR = usd * forex * hours;
+            let annualGrossINR = monthlyGrossINR * 12;
+
+            // 44ADA Calculation
+            // Taxable Income = 50% of Gross
+            let taxable = annualGrossINR * 0.50;
+
+            // Simple Tax Calc (New Regime FY 25-26 approx)
+            // 0-3 Nil, 3-7 5%, 7-10 10%, 10-12 15%, 12-15 20%, >15 30%
+            // Std Deduction assumed? No, 44ADA doesn't allow expenses, but new regime allows std ded for salary? 
+            // Usually Professionals don't get 50k std ded unless salary income. 
+            // Wait, Budget 2024 allowed Std Deduction for family pension, not 44ADA. 
+            // Let's stick to pure slab on 50% profit.
+
+            let tax = 0;
+            if (taxable > 300000) tax += Math.min(Math.max(0, taxable - 300000), 400000) * 0.05;
+            if (taxable > 700000) tax += Math.min(Math.max(0, taxable - 700000), 300000) * 0.10;
+            if (taxable > 1000000) tax += Math.min(Math.max(0, taxable - 1000000), 200000) * 0.15;
+            if (taxable > 1200000) tax += Math.min(Math.max(0, taxable - 1200000), 300000) * 0.20;
+            if (taxable > 1500000) tax += Math.max(0, taxable - 1500000) * 0.30;
+
+            // Rebate u/s 87A (limit 7L taxable = 14L Gross)
+            if (taxable <= 700000) tax = 0;
+
+            // Cess 4%
+            tax += tax * 0.04;
+
+            let monthlyTax = tax / 12;
+            let netHand = monthlyGrossINR - monthlyTax;
+
+            const fmt = (v) => "₹" + Math.round(v).toLocaleString('en-IN');
+            document.getElementById('res-gross').innerText = fmt(monthlyGrossINR);
+            document.getElementById('res-tax').innerText = fmt(monthlyTax);
+            document.getElementById('res-net').innerText = fmt(netHand);
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

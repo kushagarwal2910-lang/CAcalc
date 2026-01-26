@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Input Tax Credit Optimizer - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        purple: '#9333ea',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="gst-reverse.html" class="text-purple-400">GST & Business</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">GST ITC Optimizer</h1>
+                <p class="text-slate-500 dark:text-slate-400">Calculate optimal set-off of Input Tax Credit against
+                    Output Liability.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <h3 class="font-bold text-lg mb-4 border-b pb-2 dark:border-slate-600">1. Output Tax Liability</h3>
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div><label class="text-xs">IGST Pay</label><input type="number" id="out_igst"
+                                class="w-full p-2 border rounded" placeholder="0"></div>
+                        <div><label class="text-xs">CGST Pay</label><input type="number" id="out_cgst"
+                                class="w-full p-2 border rounded" placeholder="0"></div>
+                        <div><label class="text-xs">SGST Pay</label><input type="number" id="out_sgst"
+                                class="w-full p-2 border rounded" placeholder="0"></div>
+                    </div>
+
+                    <h3 class="font-bold text-lg mb-4 border-b pb-2 dark:border-slate-600">2. Available Input Tax Credit
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div><label class="text-xs">IGST Credit</label><input type="number" id="in_igst"
+                                class="w-full p-2 border rounded" placeholder="0"></div>
+                        <div><label class="text-xs">CGST Credit</label><input type="number" id="in_cgst"
+                                class="w-full p-2 border rounded" placeholder="0"></div>
+                        <div><label class="text-xs">SGST Credit</label><input type="number" id="in_sgst"
+                                class="w-full p-2 border rounded" placeholder="0"></div>
+                    </div>
+
+                    <button onclick="optimizeITC()"
+                        class="w-full btn-premium btn-purple text-white font-bold py-3 rounded-lg shadow-md mt-4">Optimize
+                        Set-off</button>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-6 rounded-xl shadow-xl border border-slate-700">
+                    <h2 class="text-xl font-semibold mb-4">Net Tax Payable in Cash</h2>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="bg-slate-800 p-3 rounded">
+                            <p class="text-xs text-slate-400">IGST</p>
+                            <p class="text-lg font-bold text-emerald-400" id="net-igst">₹0</p>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded">
+                            <p class="text-xs text-slate-400">CGST</p>
+                            <p class="text-lg font-bold text-emerald-400" id="net-cgst">₹0</p>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded">
+                            <p class="text-xs text-slate-400">SGST</p>
+                            <p class="text-lg font-bold text-emerald-400" id="net-sgst">₹0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function val(id) { return parseFloat(document.getElementById(id).value) || 0; }
+
+        function optimizeITC() {
+            let out = { i: val('out_igst'), c: val('out_cgst'), s: val('out_sgst') };
+            let inp = { i: val('in_igst'), c: val('in_cgst'), s: val('in_sgst') };
+
+            // Logic:
+            // 1. IGST Credit -> IGST Liability
+            let used_i_for_i = Math.min(out.i, inp.i);
+            out.i -= used_i_for_i;
+            inp.i -= used_i_for_i;
+
+            // 2. IGST Credit -> CGST & SGST (Any proportion, usually fully to one to minimize cash? Or equally? Lets do CGST then SGST)
+            let used_i_for_c = Math.min(out.c, inp.i);
+            out.c -= used_i_for_c;
+            inp.i -= used_i_for_c;
+
+            let used_i_for_s = Math.min(out.s, inp.i);
+            out.s -= used_i_for_s;
+            inp.i -= used_i_for_s;
+
+            // 3. CGST Credit -> CGST Liability (cannot use for SGST)
+            let used_c_for_c = Math.min(out.c, inp.c);
+            out.c -= used_c_for_c;
+            inp.c -= used_c_for_c;
+
+            // 4. CGST Credit -> IGST Liability (if any output IGST left)
+            let used_c_for_i = Math.min(out.i, inp.c);
+            out.i -= used_c_for_i;
+            inp.c -= used_c_for_i;
+
+            // 5. SGST Credit -> SGST Liability
+            let used_s_for_s = Math.min(out.s, inp.s);
+            out.s -= used_s_for_s;
+            inp.s -= used_s_for_s;
+
+            // 6. SGST Credit -> IGST Liability
+            let used_s_for_i = Math.min(out.i, inp.s);
+            out.i -= used_s_for_i;
+            inp.s -= used_s_for_i;
+
+            const fmt = (v) => "₹" + Math.round(v).toLocaleString('en-IN');
+            document.getElementById('net-igst').innerText = fmt(out.i);
+            document.getElementById('net-cgst').innerText = fmt(out.c);
+            document.getElementById('net-sgst').innerText = fmt(out.s);
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

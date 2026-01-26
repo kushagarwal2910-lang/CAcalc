@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marginal Relief Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        blue: '#2563eb',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="tax-44ada.html" class="text-blue-400">Tax & Salary</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">Marginal Relief Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Optimization for incomes slightly above ₹50 Lakhs or ₹1
+                    Crore.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Total
+                                Taxable Income (₹)</label>
+                            <input type="number" id="income"
+                                class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                placeholder="e.g. 5100000">
+                        </div>
+                    </div>
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+                    <button onclick="calculateRelief()"
+                        class="w-full btn-premium btn-blue text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">Calculate
+                        Tax</button>
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Enter Income > 50 Lakhs</div>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700 relative overflow-hidden">
+                    <h2 class="text-xl font-semibold mb-6 border-b border-slate-600 pb-2">Tax Breakdown</h2>
+                    <div class="space-y-4 relative z-10">
+                        <div class="flex justify-between items-center"><span class="text-slate-400">Normal Tax +
+                                Surcharge</span><span class="text-white" id="res-normal">₹0</span></div>
+                        <div class="flex justify-between items-center"><span class="text-emerald-400">Marginal
+                                Relief</span><span class="text-emerald-400 font-bold" id="res-relief">- ₹0</span></div>
+                        <div class="pt-2 border-t border-slate-700 flex justify-between items-center"><span
+                                class="text-lg">Final Tax Payable</span><span class="text-3xl font-bold text-blue-400"
+                                id="res-final">₹0</span></div>
+                        <p class="text-xs text-slate-500 mt-2 text-right">+ 4% Cess included</p>
+                    </div>
+                    <div class="flex justify-end pt-4 mt-6 border-t border-slate-700 no-print">
+                        <button onclick="window.print()" class="text-slate-300 hover:text-white text-sm">Download
+                            Report</button>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateRelief() {
+            let income = parseFloat(document.getElementById('income').value) || 0;
+            if (income <= 5000000) {
+                document.getElementById('error-msg').classList.remove('hidden');
+                document.getElementById('result-card').classList.add('hidden');
+                return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            // Simplified Logic for Demo (Approximation for >50L)
+            // 1. Calculate Tax without relief
+            // Tax on 50L + 30% on excess
+            let baseTax50L = 1312500; // Old regime approx (variable, keeping simple) or New Regime
+            // Let's assume New Regime for simplicity of logic demonstration
+            // 0-3 Nil, 3-7 5%, 7-10 10%, 10-12 15%, 12-15 20%, >15 30%
+            // Tax on 50L:
+            // 3-7: 20k, 7-10: 30k, 10-12: 30k, 12-15: 60k, 15-50: 10.5L
+            // Total = 11.9L approx
+
+            let taxOn = (amt) => {
+                if (amt <= 300000) return 0;
+                let t = 0;
+                if (amt > 300000) t += Math.min(Math.max(0, amt - 300000), 400000) * 0.05;
+                if (amt > 700000) t += Math.min(Math.max(0, amt - 700000), 300000) * 0.10;
+                if (amt > 1000000) t += Math.min(Math.max(0, amt - 1000000), 200000) * 0.15;
+                if (amt > 1200000) t += Math.min(Math.max(0, amt - 1200000), 300000) * 0.20;
+                if (amt > 1500000) t += Math.max(0, amt - 1500000) * 0.30;
+                return t;
+            };
+
+            let tax = taxOn(income);
+            let surcharge = 0;
+            if (income > 5000000 && income <= 10000000) surcharge = tax * 0.10;
+            if (income > 10000000) surcharge = tax * 0.15; // New regime cap
+
+            let taxWithSurcharge = tax + surcharge;
+
+            // 2. Calculate Relief
+            // Payable cannot exceed (Income - 50L) + TaxOn50L
+            let threshold = 5000000;
+            if (income > 10000000) threshold = 10000000;
+
+            let taxOnThreshold = taxOn(threshold);
+            // Surcharge on threshold?
+            if (threshold == 10000000) taxOnThreshold += taxOnThreshold * 0.10; // prev slab surcharge
+
+            let maxPayable = (income - threshold) + taxOnThreshold;
+
+            let relief = 0;
+            if (taxWithSurcharge > maxPayable) {
+                relief = taxWithSurcharge - maxPayable;
+                taxWithSurcharge = maxPayable;
+            }
+
+            let cess = taxWithSurcharge * 0.04;
+            let final = taxWithSurcharge + cess;
+
+            const fmt = (v) => "₹" + Math.round(v).toLocaleString('en-IN');
+
+            document.getElementById('res-normal').innerText = fmt(tax + surcharge);
+            document.getElementById('res-relief').innerText = "- " + fmt(relief);
+            document.getElementById('res-final').innerText = fmt(final);
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

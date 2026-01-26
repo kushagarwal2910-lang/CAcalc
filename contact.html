@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <nav class="bg-navy text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-16 max-w-3xl">
+        <h1 class="text-4xl font-bold text-navy dark:text-white mb-6">Contact Us</h1>
+
+        <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+            <p class="text-lg mb-6">Have questions, suggestions, or found a bug? We'd love to hear from you.</p>
+
+            <div class="space-y-4">
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-emerald-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    <span class="text-lg">support@cacalc.in</span>
+                </div>
+
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-emerald-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span class="text-lg">Bangalore, India</span>
+                </div>
+            </div>
+
+            <p class="mt-8 text-sm text-slate-500">We typically respond within 24-48 hours usually.</p>
+        </div>
+    </main>
+
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About Us</a>
+                <a href="contact.html" class="text-emerald-400">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Use</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+/* Custom styles for Financial Calculator Hub */
+
+/* Smooth transitions for theme switch */
+body,
+.bg-white,
+.bg-navy,
+.text-navy,
+.text-slate-800,
+.text-slate-500 {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ad Placeholders */
+.ad-placeholder {
+    background-color: #f3f4f6;
+    /* Gray-100 */
+    border: 1px dashed #cbd5e1;
+    /* Slate-300 */
+    color: #64748b;
+    /* Slate-500 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    min-height: 90px;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Dark Mode Ad Placeholder overrides */
+.dark .ad-placeholder {
+    background-color: #1e293b;
+    /* Slate-800 */
+    border-color: #334155;
+    /* Slate-700 */
+    color: #94a3b8;
+    /* Slate-400 */
+}
+
+.ad-placeholder::before {
+    content: "Advertisement";
+}
+
+/* Premium Gradient Button */
+.btn-premium {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3), 0 2px 4px -1px rgba(16, 185, 129, 0.15);
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4), 0 4px 6px -2px rgba(16, 185, 129, 0.2);
+    filter: brightness(110%);
+}
+
+.btn-premium:active {
+    transform: translateY(0);
+}
+
+/* Variant for Tax (Blue) */
+.btn-premium.btn-blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3), 0 2px 4px -1px rgba(59, 130, 246, 0.15);
+}
+
+.btn-premium.btn-blue:hover {
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4), 0 4px 6px -2px rgba(59, 130, 246, 0.2);
+}
+
+/* Variant for GST (Purple) */
+.btn-premium.btn-purple {
+    background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+    box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.3), 0 2px 4px -1px rgba(168, 85, 247, 0.15);
+}
+
+.btn-premium.btn-purple:hover {
+    box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.4), 0 4px 6px -2px rgba(168, 85, 247, 0.2);
+}
+
+/* Variant for Inflation (Orange) */
+.btn-premium.btn-orange {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.3), 0 2px 4px -1px rgba(249, 115, 22, 0.15);
+}
+
+.btn-premium.btn-orange:hover {
+    box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.4), 0 4px 6px -2px rgba(249, 115, 22, 0.2);
+}
+
+/* Variant for Salary (Indigo) */
+.btn-premium.btn-indigo {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.3), 0 2px 4px -1px rgba(99, 102, 241, 0.15);
+}
+
+.btn-premium.btn-indigo:hover {
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4), 0 4px 6px -2px rgba(99, 102, 241, 0.2);
+}
+
+/* Print Styles for "Download Report" */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #result-card,
+    #result-card * {
+        visibility: visible;
+    }
+
+    #result-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-shadow: none;
+        border: 2px solid #0f172a;
+        background-color: white !important;
+        color: black !important;
+    }
+
+    /* Ensure text is visible in print on dark backgrounds */
+    #result-card p,
+    #result-card span,
+    #result-card h2 {
+        color: black !important;
+    }
+
+    /* Hide buttons and ads in print mode */
+    .no-print,
+    .ad-placeholder,
+    button {
+        display: none !important;
+    }
+}
+
+/* Premium Card Hover Effects */
+.tool-card {
+    transition: all 0.3s ease;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}

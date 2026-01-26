@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Runway Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        purple: '#9333ea',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="gst-reverse.html" class="text-purple-400">GST & Business</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">Startup Runway Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Find out how long your startup can survive with current
+                    cash reserves.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Current
+                                Cash Balance (₹)</label>
+                            <input type="number" id="cash"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                placeholder="Bank Balance">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Monthly
+                                Burn Rate (₹)</label>
+                            <input type="number" id="burn"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                placeholder="Expenses - Revenue">
+                            <p class="text-xs text-slate-400 mt-1">Net cash outflow per month.</p>
+                        </div>
+                    </div>
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+                    <button onclick="calculateRunway()"
+                        class="w-full btn-premium btn-purple text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">Calculate
+                        Runway</button>
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid values.</div>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700 text-center">
+                    <p class="text-slate-400 text-sm uppercase tracking-wide">You have</p>
+                    <h2 class="text-5xl font-bold text-emerald-400 mt-2 mb-2" id="res-months">0</h2>
+                    <p class="text-xl text-white">Months of Runway</p>
+                    <p class="text-sm text-slate-500 mt-4" id="res-date">You will run out of cash by X date.</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateRunway() {
+            let cash = parseFloat(document.getElementById('cash').value) || 0;
+            let burn = parseFloat(document.getElementById('burn').value) || 0;
+
+            if (cash <= 0 || burn <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden'); return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            let months = cash / burn;
+            let monthsFixed = months.toFixed(1);
+
+            document.getElementById('res-months').innerText = monthsFixed;
+
+            // Calculate Date
+            let now = new Date();
+            now.setMonth(now.getMonth() + Math.floor(months));
+            let options = { year: 'numeric', month: 'long' };
+            document.getElementById('res-date').innerText = "Projected Zero Date: " + now.toLocaleDateString("en-US", options);
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

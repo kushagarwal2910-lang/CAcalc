@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDS Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        indigo: '#4f46e5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="tax-44ada.html" class="text-indigo-400">Freelancing</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">TDS Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Calculate TDS under Sec 194J (Professional) or 194C
+                    (Contractor).</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Invoice
+                                Amount (before GST) ₹</label>
+                            <input type="number" id="amount"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Service
+                                Type</label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <button onclick="setType('J')" id="btn-J"
+                                    class="p-3 border rounded-lg text-center transition">Professional (194J)</button>
+                                <button onclick="setType('C')" id="btn-C"
+                                    class="p-3 border rounded-lg text-center transition">Contractor (194C)</button>
+                            </div>
+                            <input type="hidden" id="section" value="">
+                            <p class="text-xs text-slate-400 mt-2" id="rate-hint">Select a type above.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-6 rounded-xl shadow-xl border border-slate-700">
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-slate-400 text-sm">TDS Rate</p>
+                            <p class="text-2xl font-bold text-white" id="res-rate">0%</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">TDS To Be Deducted</p>
+                            <p class="text-2xl font-bold text-emerald-400" id="res-tds">₹0</p>
+                        </div>
+                        <div class="col-span-2 pt-4 border-t border-slate-700">
+                            <div class="flex justify-between">
+                                <span>Payment to Vendor</span>
+                                <span class="font-bold text-xl" id="res-pay">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function setType(type) {
+            document.getElementById('section').value = type;
+
+            // Reset Classes
+            let base = "p-3 border rounded-lg text-center transition ";
+            let active = "bg-indigo-100 dark:bg-indigo-900/50 border-indigo-500 text-indigo-700 dark:text-indigo-300 font-bold";
+            let inactive = "border-slate-300 dark:border-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800";
+
+            document.getElementById('btn-J').className = base + (type === 'J' ? active : inactive);
+            document.getElementById('btn-C').className = base + (type === 'C' ? active : inactive);
+
+            let rate = 0;
+            let hint = "";
+            if (type === 'J') {
+                rate = 10;
+                hint = "Rate: 10% (Technical/Professional Services). Note: 2% for Call Center/Technical Support only.";
+            } else {
+                rate = 1; // Assuming Individual Contractor
+                hint = "Rate: 1% (Individual/HUF) or 2% (Others). Using 1% base.";
+            }
+            document.getElementById('rate-hint').innerText = hint;
+            calculateTDS(rate);
+        }
+
+        function calculateTDS(rate) {
+            let amt = parseFloat(document.getElementById('amount').value) || 0;
+            if (amt <= 0) return;
+
+            let tds = amt * (rate / 100);
+            let pay = amt - tds;
+
+            const fmt = (v) => "₹" + Math.round(v).toLocaleString('en-IN');
+            document.getElementById('res-rate').innerText = rate + "%";
+            document.getElementById('res-tds').innerText = fmt(tds);
+            document.getElementById('res-pay').innerText = fmt(pay);
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+
+        // Auto recalc on amount change
+        document.getElementById('amount').addEventListener('input', () => {
+            let type = document.getElementById('section').value;
+            if (type) setType(type); // re-trigger
+        });
+    </script>
+</body>
+
+</html>

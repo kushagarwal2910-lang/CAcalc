@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced SIP Step-Up Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="sip-step-up.html" class="text-emerald-400">SIP Step-Up</a>
+                <a href="tax-44ada.html" class="hover:text-emerald-400 transition">Tax 44ADA</a>
+                <a href="gst-reverse.html" class="hover:text-emerald-400 transition">GST</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Ad Placeholder: Top -->
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Calculator Section -->
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">SIP Step-Up Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Calculate how your wealth grows with an annual increase in
+                    your monthly
+                    investment.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Monthly
+                                Investment (₹)</label>
+                            <input type="number" id="monthlyInvestment"
+                                class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"
+                                placeholder="e.g. 5000">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Expected
+                                    Return (Annual
+                                    %)</label>
+                                <input type="number" id="returnRate"
+                                    class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"
+                                    placeholder="e.g. 12">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Time
+                                    Period (Years)</label>
+                                <input type="number" id="timePeriod"
+                                    class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"
+                                    placeholder="e.g. 10">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Annual
+                                Step-Up (%)</label>
+                            <input type="number" id="stepUp"
+                                class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"
+                                placeholder="e.g. 10">
+                            <p class="text-xs text-slate-400 mt-1">Increase your SIP amount by this % every year.</p>
+                        </div>
+                    </div>
+
+                    <!-- Ad Placeholder: In-Content -->
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+
+                    <button onclick="calculateSIP()"
+                        class="w-full btn-premium text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">
+                        Calculate Returns
+                    </button>
+
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid positive values.
+                    </div>
+                </div>
+
+                <!-- Results Card -->
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4s0 0 0 0zm1 2h2v2H7v-2zm4 0h2v2h-2v-2z">
+                            </path>
+                        </svg>
+                    </div>
+
+                    <h2 class="text-xl font-semibold mb-6 border-b border-slate-600 pb-2">Investment Summary</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative z-10">
+                        <div>
+                            <p class="text-slate-400 text-sm mb-1">Total Invested</p>
+                            <p class="text-2xl font-bold" id="res-invested">₹0</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-400 text-sm mb-1">Wealth Gained</p>
+                            <p class="text-2xl font-bold text-emerald-400" id="res-gained">₹0</p>
+                        </div>
+                        <div>
+                            <p class="text-white text-sm mb-1">Maturity Value</p>
+                            <p class="text-3xl font-bold text-white" id="res-total">₹0</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-4 border-t border-slate-700 no-print">
+                        <button onclick="window.print()"
+                            class="flex items-center text-sm font-medium text-slate-300 hover:text-white transition">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                            Download Report
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Ad Placeholder: Sidebar Start -->
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About Us</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Use</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function calculateSIP() {
+            // Get inputs
+            let p_monthly = parseFloat(document.getElementById('monthlyInvestment').value);
+            let r_annual = parseFloat(document.getElementById('returnRate').value);
+            let n_years = parseFloat(document.getElementById('timePeriod').value);
+            let s_stepup = parseFloat(document.getElementById('stepUp').value);
+
+            // Validation
+            if (isNaN(p_monthly) || isNaN(r_annual) || isNaN(n_years) || isNaN(s_stepup) ||
+                p_monthly <= 0 || r_annual < 0 || n_years <= 0 || s_stepup < 0) {
+                document.getElementById('error-msg').classList.remove('hidden');
+                document.getElementById('result-card').classList.add('hidden');
+                return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            let totalMonths = n_years * 12;
+            let currentMonthlyRate = r_annual / 12 / 100;
+
+            let currentCorpus = 0;
+            let currentInvestmentAmount = p_monthly;
+            let totalInvested = 0;
+
+            // Logic: Iterate month by month
+            for (let m = 1; m <= totalMonths; m++) {
+                // Add monthly investment
+                currentCorpus += currentInvestmentAmount;
+                totalInvested += currentInvestmentAmount;
+
+                // Add interest for this month
+                let interest = currentCorpus * currentMonthlyRate;
+                currentCorpus += interest;
+
+                // Apply Step-Up every 12 months
+                if (m % 12 === 0) {
+                    currentInvestmentAmount = currentInvestmentAmount * (1 + s_stepup / 100);
+                }
+            }
+
+            let wealthGained = currentCorpus - totalInvested;
+
+            // Format Currency
+            const formatCurr = (val) => {
+                return "₹" + Math.round(val).toLocaleString('en-IN');
+            };
+
+            // Update UI
+            document.getElementById('res-invested').innerText = formatCurr(totalInvested);
+            document.getElementById('res-gained').innerText = formatCurr(wealthGained);
+            document.getElementById('res-total').innerText = formatCurr(currentCorpus);
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

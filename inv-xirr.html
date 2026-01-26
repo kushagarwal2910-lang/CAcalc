@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XIRR Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        orange: '#ea580c',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="sip-step-up.html" class="text-orange-400">Investments</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">SIP/Lumpsum XIRR Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Calculate annual returns for multiple irregular
+                    investments.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div id="entries-container" class="space-y-3 max-h-64 overflow-y-auto mb-4 pr-2">
+                        <!-- Dynamic Rows -->
+                        <div class="flex space-x-2">
+                            <input type="date" class="date-input w-1/2 p-2 border rounded" placeholder="Date">
+                            <input type="number" class="amount-input w-1/2 p-2 border rounded"
+                                placeholder="Amount (-ve for outflow)">
+                        </div>
+                        <div class="flex space-x-2">
+                            <input type="date" class="date-input w-1/2 p-2 border rounded" placeholder="Date">
+                            <input type="number" class="amount-input w-1/2 p-2 border rounded" placeholder="Amount">
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-3 mb-6">
+                        <button onclick="addRow()"
+                            class="px-4 py-2 bg-slate-200 dark:bg-slate-600 rounded text-sm hover:bg-slate-300 transition">+
+                            Add Row</button>
+                        <button onclick="fillSample()"
+                            class="px-4 py-2 bg-slate-200 dark:bg-slate-600 rounded text-sm hover:bg-slate-300 transition">Load
+                            Sample</button>
+                    </div>
+
+                    <div
+                        class="p-3 bg-yellow-50 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 text-xs rounded mb-4">
+                        Tip: Enter Investment amounts as Negative (e.g., -5000) and Current Value/Withdrawals as
+                        Positive.
+                    </div>
+
+                    <button onclick="calculateXIRR()"
+                        class="w-full btn-premium btn-orange text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">Calculate
+                        XIRR</button>
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Need at least 1 negative and 1 positive
+                        value.</div>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700 text-center">
+                    <p class="text-slate-400 text-sm uppercase tracking-wide">Annualized Return (XIRR)</p>
+                    <h2 class="text-5xl font-bold text-emerald-400 mt-2" id="res-xirr">0%</h2>
+                </div>
+            </div>
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function addRow() {
+            let div = document.createElement('div');
+            div.className = "flex space-x-2";
+            div.innerHTML = '<input type="date" class="date-input w-1/2 p-2 border rounded"><input type="number" class="amount-input w-1/2 p-2 border rounded" placeholder="Amount">';
+            document.getElementById('entries-container').appendChild(div);
+        }
+
+        function fillSample() {
+            let container = document.getElementById('entries-container');
+            container.innerHTML = '';
+            let data = [
+                { d: '2024-01-01', a: -5000 }, { d: '2024-02-01', a: -5000 }, { d: '2024-03-01', a: -5000 },
+                { d: '2024-04-01', a: -5000 }, { d: '2024-05-01', a: 22000 } // Redemption
+            ];
+            data.forEach(x => {
+                let div = document.createElement('div');
+                div.className = "flex space-x-2";
+                div.innerHTML = `<input type="date" class="date-input w-1/2 p-2 border rounded" value="${x.d}"><input type="number" class="amount-input w-1/2 p-2 border rounded" value="${x.a}">`;
+                container.appendChild(div);
+            });
+        }
+
+        function calculateXIRR() {
+            let dates = document.querySelectorAll('.date-input');
+            let amts = document.querySelectorAll('.amount-input');
+            let cashflow = [];
+
+            for (let i = 0; i < dates.length; i++) {
+                if (dates[i].value && amts[i].value) {
+                    cashflow.push({
+                        d: new Date(dates[i].value),
+                        v: parseFloat(amts[i].value)
+                    });
+                }
+            }
+
+            if (cashflow.length < 2) {
+                document.getElementById('error-msg').innerText = "Need at least 2 entries.";
+                document.getElementById('error-msg').classList.remove('hidden'); return;
+            }
+
+            // Check signs
+            let hasPos = cashflow.some(x => x.v > 0);
+            let hasNeg = cashflow.some(x => x.v < 0);
+            if (!hasPos || !hasNeg) {
+                document.getElementById('error-msg').innerText = "Need mixed positive and negative cashflows.";
+                document.getElementById('error-msg').classList.remove('hidden'); return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            // XIRR Algo: Newton Raphson
+            let rate = 0.1; // Guess
+            for (let i = 0; i < 50; i++) {
+                let res = xnpv(rate, cashflow);
+                if (Math.abs(res) < 0.0001) break;
+                let d = xnpv_prime(rate, cashflow);
+                if (Math.abs(d) < 0.000001) break; // Avoid zero division
+                rate = rate - (res / d);
+            }
+
+            let result = (rate * 100).toFixed(2);
+            document.getElementById('res-xirr').innerText = result + "%";
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+
+        function xnpv(rate, cashflow) {
+            let sum = 0;
+            let start = cashflow[0].d;
+            for (let x of cashflow) {
+                let days = (x.d - start) / (1000 * 60 * 60 * 24);
+                sum += x.v / Math.pow(1 + rate, days / 365);
+            }
+            return sum;
+        }
+
+        function xnpv_prime(rate, cashflow) {
+            let sum = 0;
+            let start = cashflow[0].d;
+            for (let x of cashflow) {
+                let days = (x.d - start) / (1000 * 60 * 60 * 24);
+                let t = days / 365;
+                sum -= (t * x.v) / Math.pow(1 + rate, t + 1);
+            }
+            return sum;
+        }
+    </script>
+</body>
+
+</html>

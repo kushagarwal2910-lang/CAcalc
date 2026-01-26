@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAcalc - Professional Financial Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        blue: '#2563eb',
+                        purple: '#9333ea',
+                        orange: '#ea580c',
+                        indigo: '#4f46e5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="bg-navy text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="sip-step-up.html" class="hover:text-emerald-400 transition">Investments</a>
+                <a href="tax-44ada.html" class="hover:text-emerald-400 transition">Tax & Salary</a>
+                <a href="gst-reverse.html" class="hover:text-emerald-400 transition">GST</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header
+        class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-16 text-center max-w-3xl">
+            <h1 class="text-4xl md:text-5xl font-bold text-navy dark:text-white mb-6">Master Your Finances with
+                Professional Precision</h1>
+            <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">India's most accurate financial calculators for
+                Chartered Accountants, Freelancers, and Smart Investors.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-6xl">
+
+        <!-- Search Section -->
+        <div class="max-w-2xl mx-auto mb-12 relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-6 w-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+            <input type="text" id="searchInput" onkeyup="filterTools()"
+                class="block w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300"
+                placeholder="Search for tools like 'SIP', 'Tax', 'GST', 'Loan'...">
+        </div>
+
+        <!-- Ad Placeholder: Top -->
+        <div class="ad-placeholder w-full h-24 rounded-lg mb-12">
+            <span class="text-xs font-semibold tracking-wider p-4">ADVERTISEMENT</span>
+        </div>
+
+        <!-- Category: Taxation & Salary -->
+        <section class="mb-16 tool-category" data-category="tax">
+            <h2 class="text-2xl font-bold text-navy dark:text-white mb-6 flex items-center">
+                <span class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg mr-3 text-blue-600 dark:text-blue-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l2.333-1.75L10 21l2.333-1.75L15 21l1.667-1.75L19 21z">
+                        </path>
+                    </svg>
+                </span>
+                Taxation & Salary
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Tax 44ADA -->
+                <a href="tax-44ada.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Freelancer Tax (44ADA)</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Presumptive
+                            taxation calculator for professionals.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Salary In-Hand -->
+                <a href="salary-breakdown.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Salary In-Hand</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Monthly take-home
+                            calculator.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Old vs New Tax -->
+                <a href="tax-old-vs-new.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Old vs New Regime</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Compare tax
+                            liability under both regimes.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- HRA Exemption -->
+                <a href="tax-hra.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">HRA Exemption</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Calculate exempt
+                            HRA amount.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Advance Tax -->
+                <a href="tax-advance.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Advance Tax</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Estimate advance
+                            tax liability installments.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Capital Gains -->
+                <a href="tax-capital-gains.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Capital Gains Tax</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">LTCG and STCG
+                            calculator for assets.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Gratuity -->
+                <a href="tax-gratuity.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Gratuity Calculator</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Estimate tax-free
+                            gratuity amount.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Marginal Relief -->
+                <a href="tax-marginal.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Marginal Relief</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Check surcharge
+                            relief eligibility.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- TDS Rate -->
+                <a href="free-tds.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">TDS Calculator</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">TDS rates and
+                            calculations.</p>
+                        <span
+                            class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Category: GST & Business -->
+        <section class="mb-16 tool-category" data-category="gst">
+            <h2 class="text-2xl font-bold text-navy dark:text-white mb-6 flex items-center">
+                <span
+                    class="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg mr-3 text-purple-600 dark:text-purple-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                        </path>
+                    </svg>
+                </span>
+                GST & Business
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- GST Reverse -->
+                <a href="gst-reverse.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">GST Reverse Calculator</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Calculate base
+                            amount from inclusive price.</p>
+                        <span
+                            class="text-purple-600 dark:text-purple-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- GST ITC -->
+                <a href="gst-itc.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Input Tax Credit (ITC)</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Calculate
+                            eligible input credit.</p>
+                        <span
+                            class="text-purple-600 dark:text-purple-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- GST Late Fee -->
+                <a href="gst-late-fee.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">GST Late Fee</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Penalty
+                            calculator for delayed returns.</p>
+                        <span
+                            class="text-purple-600 dark:text-purple-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Depreciation -->
+                <a href="biz-depreciation.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Depreciation Rate</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Calculate asset
+                            depreciation under Companies Act.</p>
+                        <span
+                            class="text-purple-600 dark:text-purple-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Runway -->
+                <a href="biz-runway.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Startup Runway</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Estimate months
+                            of survival for startups.</p>
+                        <span
+                            class="text-purple-600 dark:text-purple-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Category: Investments & Wealth -->
+        <section class="mb-16 tool-category" data-category="invest">
+            <h2 class="text-2xl font-bold text-navy dark:text-white mb-6 flex items-center">
+                <span
+                    class="bg-emerald-100 dark:bg-emerald-900/30 p-2 rounded-lg mr-3 text-emerald-600 dark:text-emerald-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                </span>
+                Investments & Wealth
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- SIP Step-Up -->
+                <a href="sip-step-up.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Advanced SIP Step-Up</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">SIP calculator
+                            with annual step-up logic.</p>
+                        <span
+                            class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Inflation Goal -->
+                <a href="inflation-goal.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Inflation Goal Planner</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Plan for future
+                            goals adjusting for inflation.</p>
+                        <span
+                            class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- XIRR -->
+                <a href="inv-xirr.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">XIRR Calculator</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Calculate returns
+                            for irregular investments.</p>
+                        <span
+                            class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- SWP -->
+                <a href="inv-swp.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">SWP Calculator</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Systematic
+                            Withdrawal Plan estimator.</p>
+                        <span
+                            class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- FD vs Debt -->
+                <a href="inv-fd-debt.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">FD vs Debt Fund</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Comparison with
+                            post-tax returns.</p>
+                        <span
+                            class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Loan Prepay -->
+                <a href="inv-loan-prepay.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Loan Prepayment</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Calculate
+                            interest saved by prepaying loans.</p>
+                        <span
+                            class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Category: Freelancing Tools -->
+        <section class="mb-16 tool-category" data-category="freelance">
+            <h2 class="text-2xl font-bold text-navy dark:text-white mb-6 flex items-center">
+                <span
+                    class="bg-indigo-100 dark:bg-indigo-900/30 p-2 rounded-lg mr-3 text-indigo-600 dark:text-indigo-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                </span>
+                Freelancing Tools
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Hourly Rate -->
+                <a href="free-hourly.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Hourly Rate Calc</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Calculate your
+                            ideal hourly rate.</p>
+                        <span
+                            class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Invoice Generator -->
+                <a href="free-invoice.html" class="group tool-item">
+                    <div
+                        class="tool-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm h-full flex flex-col items-start transition-colors duration-300">
+                        <h3 class="text-xl font-bold text-navy dark:text-white mb-2">Invoice Generator</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow tool-desc">Create
+                            professional PDF invoices.</p>
+                        <span
+                            class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">Open
+                            Tool &rarr;</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p>
+            <p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.
+            </p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About Us</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Use</a>
+            </div>
+            <p class="text-xs mt-4 text-slate-500">Professional Financial Tools for Indian Market.</p>
+        </div>
+    </footer>
+
+    <script>
+        function filterTools() {
+            let input = document.getElementById('searchInput');
+            let filter = input.value.toLowerCase();
+            let items = document.querySelectorAll('.tool-item');
+
+            // Filter Items
+            items.forEach(function (item) {
+                let title = item.querySelector('h3').innerText.toLowerCase();
+                let desc = item.querySelector('.tool-desc').innerText.toLowerCase();
+                if (title.includes(filter) || desc.includes(filter)) {
+                    item.parentElement.style.display = ""; // Reset link wrapper
+                    item.style.display = "";
+                } else {
+                    item.parentElement.style.display = "none";
+                    item.style.display = "none";
+                }
+            });
+
+            // Hide Empty Sections
+            document.querySelectorAll('.tool-category').forEach(function (section) {
+                let visibleItems = section.querySelectorAll('.tool-item:not([style*="display: none"])');
+                // Check if any direct tool-items are visible
+                let hasVisible = false;
+                section.querySelectorAll('.tool-item').forEach(item => {
+                    if (item.style.display !== "none") hasVisible = true;
+                });
+
+                if (!hasVisible) {
+                    section.style.display = "none";
+                } else {
+                    section.style.display = "";
+                    // Special check if all items are hidden by filter in this category
+                    let anyVisible = false;
+                    section.querySelectorAll('.tool-item').forEach(item => {
+                        if (item.style.display !== "none" && item.parentElement.style.display !== "none") anyVisible = true;
+                    });
+                    if (!anyVisible) section.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

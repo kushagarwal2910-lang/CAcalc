@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Tax Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        blue: '#2563eb',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="tax-44ada.html" class="text-blue-400">Tax & Salary</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">Advance Tax Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Calculate your quarterly Advance Tax liability and due
+                    dates.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Total
+                                Estimated Tax Liability (₹)</label>
+                            <input type="number" id="taxLiability"
+                                class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                placeholder="e.g. 500000">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">TDS/TCS
+                                Deducted (₹)</label>
+                            <input type="number" id="tdsDeducted"
+                                class="w-full p-3 border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                placeholder="e.g. 50000">
+                        </div>
+                    </div>
+
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+
+                    <button onclick="calculateAdvanceTax()"
+                        class="w-full btn-premium btn-blue text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">
+                        Check Deadlines
+                    </button>
+
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid values.</div>
+                </div>
+
+                <!-- Results -->
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700 relative overflow-hidden">
+                    <h2 class="text-xl font-semibold mb-6 border-b border-slate-600 pb-2">Payment Schedule</h2>
+
+                    <div class="space-y-4 relative z-10 text-sm">
+                        <div class="flex justify-between font-bold text-slate-300 border-b border-slate-700 pb-2">
+                            <span>Deadline</span>
+                            <span>Min. Amount Due (Cumulative)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">June 15th (15%)</span>
+                            <span class="text-white" id="due-june">₹0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Sept 15th (45%)</span>
+                            <span class="text-white" id="due-sept">₹0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Dec 15th (75%)</span>
+                            <span class="text-white" id="due-dec">₹0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">March 15th (100%)</span>
+                            <span class="text-white font-bold text-emerald-400" id="due-march">₹0</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-3 bg-red-900/30 border border-red-800 rounded text-xs text-red-200">
+                        Note: Interest u/s 234C applies if these % targets are missed.
+                    </div>
+
+                    <div class="flex justify-end pt-4 mt-6 border-t border-slate-700 no-print">
+                        <button onclick="window.print()" class="text-slate-300 hover:text-white text-sm">Download
+                            Report</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy</a>
+                <a href="terms.html" class="hover:text-white transition">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function calculateAdvanceTax() {
+            let liability = parseFloat(document.getElementById('taxLiability').value) || 0;
+            let tds = parseFloat(document.getElementById('tdsDeducted').value) || 0;
+
+            if (liability <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden');
+                document.getElementById('result-card').classList.add('hidden');
+                return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            let netPayable = liability - tds;
+            if (netPayable < 10000) {
+                alert("Advance Tax is not applicable if net liability is less than ₹10,000.");
+                return;
+            }
+
+            const formatCurr = (val) => "₹" + Math.round(val).toLocaleString('en-IN');
+
+            document.getElementById('due-june').innerText = formatCurr(netPayable * 0.15);
+            document.getElementById('due-sept').innerText = formatCurr(netPayable * 0.45);
+            document.getElementById('due-dec').innerText = formatCurr(netPayable * 0.75);
+            document.getElementById('due-march').innerText = formatCurr(netPayable);
+
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRA Exemption Calculator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        blue: '#2563eb',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="tax-44ada.html" class="text-blue-400">Tax & Salary</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="ad-placeholder w-full max-w-4xl mx-auto mb-8 h-24 rounded-lg"></div>
+
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">HRA Exemption Calculator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Calculate tax-exempt portion of House Rent Allowance.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                    <div class="grid gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Basic
+                                Salary (Annual) ₹</label>
+                            <input type="number" id="basic"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">DA
+                                (Dearness Allowance) Annual ₹</label>
+                            <input type="number" id="da"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg"
+                                value="0">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">HRA
+                                Received (Annual) ₹</label>
+                            <input type="number" id="hraRec"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Total Rent
+                                Paid (Annual) ₹</label>
+                            <input type="number" id="rentPaid"
+                                class="w-full p-3 border border-slate-300 dark:bg-slate-700 dark:text-white rounded-lg">
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="isMetro" class="w-5 h-5 text-blue-600 rounded">
+                            <label for="isMetro" class="ml-2 text-slate-700 dark:text-slate-300">Live in Metro City?
+                                (Delhi, Mumbai, Kolkata, Chennai)</label>
+                        </div>
+                    </div>
+                    <div class="ad-placeholder w-full h-20 rounded-lg my-6"></div>
+                    <button onclick="calculateHRA()"
+                        class="w-full btn-premium btn-blue text-white font-bold py-4 rounded-lg shadow-md transition transform active:scale-95 text-lg">Calculate
+                        Exempt HRA</button>
+                    <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid values.</div>
+                </div>
+
+                <div id="result-card"
+                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700">
+                    <h2 class="text-xl font-semibold mb-6 border-b border-slate-600 pb-2">HRA Calculation</h2>
+                    <div class="space-y-4 text-sm">
+                        <div class="flex justify-between items-center"><span class="text-slate-400">Total HRA
+                                Received</span><span class="text-white" id="res-received">₹0</span></div>
+                        <div class="flex justify-between items-center"><span class="text-emerald-400">Exempt HRA (Least
+                                of 3)</span><span class="text-emerald-400 font-bold" id="res-exempt">₹0</span></div>
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-700"><span
+                                class="text-slate-300">Taxable HRA</span><span class="text-white font-bold"
+                                id="res-taxable">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateHRA() {
+            let basic = parseFloat(document.getElementById('basic').value) || 0;
+            let da = parseFloat(document.getElementById('da').value) || 0;
+            let hraRec = parseFloat(document.getElementById('hraRec').value) || 0;
+            let rentPaid = parseFloat(document.getElementById('rentPaid').value) || 0;
+            let isMetro = document.getElementById('isMetro').checked;
+
+            if (basic <= 0 || hraRec <= 0) {
+                document.getElementById('error-msg').classList.remove('hidden'); return;
+            }
+            document.getElementById('error-msg').classList.add('hidden');
+
+            let salary = basic + da;
+
+            // Logic: Least of 3
+            // 1. Actual HRA
+            let cond1 = hraRec;
+            // 2. 50% (Metro) or 40% (Non-Metro) of Salary
+            let cond2 = salary * (isMetro ? 0.50 : 0.40);
+            // 3. Rent Paid - 10% of Salary
+            let cond3 = rentPaid - (salary * 0.10);
+            if (cond3 < 0) cond3 = 0;
+
+            let exempt = Math.min(cond1, cond2, cond3);
+            let taxable = hraRec - exempt;
+
+            const fmt = (v) => "₹" + Math.round(v).toLocaleString('en-IN');
+            document.getElementById('res-received').innerText = fmt(hraRec);
+            document.getElementById('res-exempt').innerText = fmt(exempt);
+            document.getElementById('res-taxable').innerText = fmt(taxable);
+            document.getElementById('result-card').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

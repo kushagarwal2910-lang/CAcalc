@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator - CAcalc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .invoice-box {
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        emerald: '#10b981',
+                        indigo: '#4f46e5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <nav class="bg-navy text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tight">CA<span
+                    class="text-emerald-400">calc</span></a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-emerald-400 transition">Home</a>
+                <a href="tax-44ada.html" class="text-indigo-400">Freelancing</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+            <!-- Editor (Left) -->
+            <div class="lg:col-span-2 space-y-6 no-print">
+                <h1 class="text-3xl font-bold text-navy dark:text-white">Invoice Generator</h1>
+                <p class="text-slate-500 dark:text-slate-400">Fill details to auto-generate a professional invoice.</p>
+
+                <div
+                    class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300 space-y-4">
+                    <h3 class="font-bold border-b pb-2 dark:border-slate-600">Your Details</h3>
+                    <input type="text" id="myname" class="w-full p-2 border rounded dark:bg-slate-700"
+                        placeholder="Your Name / Business Name" oninput="updateInvoice()">
+                    <input type="text" id="mygst" class="w-full p-2 border rounded dark:bg-slate-700"
+                        placeholder="Your GSTIN / PAN" oninput="updateInvoice()">
+
+                    <h3 class="font-bold border-b pb-2 dark:border-slate-600 mt-4">Client Details</h3>
+                    <input type="text" id="clientname" class="w-full p-2 border rounded dark:bg-slate-700"
+                        placeholder="Client Name" oninput="updateInvoice()">
+                    <input type="date" id="invdate" class="w-full p-2 border rounded dark:bg-slate-700"
+                        oninput="updateInvoice()">
+
+                    <h3 class="font-bold border-b pb-2 dark:border-slate-600 mt-4">Items</h3>
+                    <div id="items-list" class="space-y-2">
+                        <div class="flex space-x-2">
+                            <input type="text" class="item-desc w-2/3 p-2 border rounded dark:bg-slate-700"
+                                placeholder="Description" oninput="updateInvoice()">
+                            <input type="number" class="item-price w-1/3 p-2 border rounded dark:bg-slate-700"
+                                placeholder="Amount" oninput="updateInvoice()">
+                        </div>
+                    </div>
+                    <button onclick="addItem()" class="text-sm text-blue-500 hover:text-blue-600">+ Add Item</button>
+
+                    <div class="flex items-center mt-4">
+                        <label class="mr-2">Currency:</label>
+                        <select id="currency" class="p-2 border rounded dark:bg-slate-700" onchange="updateInvoice()">
+                            <option value="INR">INR (₹)</option>
+                            <option value="USD">USD ($)</option>
+                        </select>
+                    </div>
+
+                    <button onclick="window.print()"
+                        class="w-full mt-6 btn-premium btn-indigo text-white font-bold py-3 rounded-lg shadow-md">Print
+                        / Save PDF</button>
+                </div>
+            </div>
+
+            <!-- Preview (Right) -->
+            <div class="lg:col-span-3">
+                <div id="invoice-preview"
+                    class="invoice-box bg-white text-slate-800 p-8 rounded-xl shadow-lg border border-slate-200 min-h-[600px] relative">
+                    <div class="flex justify-between items-start mb-8">
+                        <div>
+                            <h2 class="text-2xl font-bold text-navy" id="prev-myname">Your Name</h2>
+                            <p class="text-sm text-slate-500" id="prev-mygst">GSTIN: -</p>
+                        </div>
+                        <div class="text-right">
+                            <h1 class="text-4xl font-bold text-slate-200">INVOICE</h1>
+                            <p class="text-sm text-slate-500 mt-1">Date: <span id="prev-date"></span></p>
+                            <p class="text-sm text-slate-500">Inv #: <span id="prev-no">001</span></p>
+                        </div>
+                    </div>
+
+                    <div class="mb-8 p-4 bg-slate-50 rounded border border-slate-100">
+                        <p class="text-xs text-slate-400 uppercase tracking-wide mb-1">Bill To:</p>
+                        <h3 class="text-lg font-bold" id="prev-client">Client Name</h3>
+                    </div>
+
+                    <table class="w-full mb-8">
+                        <thead>
+                            <tr class="border-b-2 border-slate-800">
+                                <th class="text-left py-2">Description</th>
+                                <th class="text-right py-2 w-32">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prev-items">
+                            <!-- Items here -->
+                        </tbody>
+                    </table>
+
+                    <div class="flex justify-end">
+                        <div class="w-1/2">
+                            <div class="flex justify-between py-2 border-b border-slate-200">
+                                <span class="font-bold">Total</span>
+                                <span class="font-bold text-xl" id="prev-total">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-8 left-8 right-8 text-center text-xs text-slate-400">
+                        <p>Thank you for your business!</p>
+                    </div>
+                </div>
+                <p class="text-center text-xs text-slate-400 mt-4 no-print">Preview (Actual print will be clean)</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Set today's date
+        document.getElementById('invdate').valueAsDate = new Date();
+
+        function addItem() {
+            let div = document.createElement('div');
+            div.className = "flex space-x-2";
+            div.innerHTML = '<input type="text" class="item-desc w-2/3 p-2 border rounded dark:bg-slate-700" placeholder="Description" oninput="updateInvoice()"><input type="number" class="item-price w-1/3 p-2 border rounded dark:bg-slate-700" placeholder="Amount" oninput="updateInvoice()">';
+            document.getElementById('items-list').appendChild(div);
+            updateInvoice();
+        }
+
+        function updateInvoice() {
+            // Header Info
+            document.getElementById('prev-myname').innerText = document.getElementById('myname').value || "Your Name";
+            document.getElementById('prev-mygst').innerText = document.getElementById('mygst').value || "GSTIN: -";
+            document.getElementById('prev-client').innerText = document.getElementById('clientname').value || "Client Name";
+            document.getElementById('prev-date').innerText = document.getElementById('invdate').value;
+
+            let curr = document.getElementById('currency').value === 'USD' ? '$' : '₹';
+
+            // Items
+            let descs = document.querySelectorAll('.item-desc');
+            let prices = document.querySelectorAll('.item-price');
+            let tbody = document.getElementById('prev-items');
+            tbody.innerHTML = '';
+            let total = 0;
+
+            for (let i = 0; i < descs.length; i++) {
+                let d = descs[i].value;
+                let p = parseFloat(prices[i].value) || 0;
+                if (d || p) {
+                    let tr = document.createElement('tr');
+                    tr.className = "border-b border-slate-100";
+                    tr.innerHTML = `<td class="py-2 text-slate-600">${d}</td><td class="py-2 text-right font-medium">${curr}${p.toFixed(2)}</td>`;
+                    tbody.appendChild(tr);
+                    total += p;
+                }
+            }
+
+            document.getElementById('prev-total').innerText = curr + total.toFixed(2);
+        }
+
+        // Init
+        updateInvoice();
+    </script>
+</body>
+
+</html>
