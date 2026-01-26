@@ -153,6 +153,89 @@
                 <p class="text-center text-xs text-slate-400 mt-4 no-print">Preview (Actual print will be clean)</p>
             </div>
         </div>
+
+        <!-- SEO Content Section -->
+        <section
+            class="mt-12 max-w-4xl mx-auto bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300 prose dark:prose-invert">
+            <article>
+                <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Essential Elements of a Valid GST Invoice
+                </h2>
+                <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                    A professional invoice is not just a demand for payment; it is a legal document, especially under
+                    the GST regime. For a freelancer or business to issue a valid tax invoice in India, <strong>Rule 46
+                        of the CGST Rules</strong> mandates certain specific fields.
+                </p>
+
+                <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Checklist for Your Invoice</h2>
+                <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 mb-6 space-y-2">
+                    <li><strong>Supplier Details:</strong> Name, Address, and GSTIN of the supplier.</li>
+                    <li><strong>Recipient Details:</strong> Name, Address, and GSTIN (if registered) of the client.</li>
+                    <li><strong>Serial Number:</strong> A consecutive serial number (e.g., INV/2025/001) unique for the
+                        financial year.</li>
+                    <li><strong>Date:</strong> Date of issue of the invoice.</li>
+                    <li><strong>SAC/HSN Code:</strong> Service Accounting Code (for services) or HSN Code (for goods).
+                    </li>
+                    <li><strong>Tax Breakup:</strong> Clear separation of taxable value, CGST, SGST, IGST, and Total
+                        Value.</li>
+                    <li><strong>Signature:</strong> Digital or physical signature of the supplier.</li>
+                </ul>
+
+                <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Frequently Asked Questions (FAQ)</h2>
+                <div class="space-y-4">
+                    <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                        <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Is GST mandatory for
+                            freelancers?</h3>
+                        <p class="text-slate-600 dark:text-slate-300">GST is mandatory only if your aggregate annual
+                            turnover exceeds <strong>₹20 Lakhs</strong> (₹10 Lakhs for special category states) or if
+                            you are providing services inter-state (though exemption up to 20L exists for inter-state
+                            services now).</p>
+                    </div>
+                    <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                        <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Can I issue a Bill of Supply
+                            instead?</h3>
+                        <p class="text-slate-600 dark:text-slate-300">Yes, if you are registered under the
+                            <strong>Composition Scheme</strong> or if you are supplying exempted goods/services, you
+                            should issue a Bill of Supply, not a Tax Invoice, and you cannot charge GST.</p>
+                    </div>
+                    <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                        <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">How do I export this invoice?
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-300">Use the "Print / Save PDF" button. In the print
+                            dialog, change the destination to "Save as PDF" to download a clean, professional PDF file.
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": "Is GST mandatory for freelancers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GST is mandatory only if your aggregate annual turnover exceeds ₹20 Lakhs (₹10 Lakhs for special category states) or if you are providing services inter-state (though exemption up to 20L exists for inter-state services now)."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Can I issue a Bill of Supply instead?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, if you are registered under the Composition Scheme or if you are supplying exempted goods/services, you should issue a Bill of Supply, not a Tax Invoice, and you cannot charge GST."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How do I export this invoice?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use the Print / Save PDF button. In the print dialog, change the destination to Save as PDF to download a clean, professional PDF file."
+            }
+          }]
+        }
+        </script>
     </main>
 
     <script>

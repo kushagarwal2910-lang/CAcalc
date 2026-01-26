@@ -78,27 +78,114 @@
                     <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Requires min 5 years (usually)</div>
                 </div>
 
-                <div id="result-card"
-                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700">
-                    <h2 class="text-xl font-semibold mb-6 border-b border-slate-600 pb-2">Gratuity Payout</h2>
-                    <div class="text-center">
-                        <p class="text-sm text-slate-400">Estimated Amount</p>
-                        <p class="text-4xl font-bold text-emerald-400 mt-2" id="res-amount">₹0</p>
-                        <div class="mt-4 bg-slate-800 rounded p-2 text-xs text-slate-500">
-                            Exempt up to ₹20 Lakhs
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <div class="lg:col-span-1">
-                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
-            </div>
+            <!-- SEO Content Section -->
+            <section
+                class="mt-12 bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300 prose dark:prose-invert max-w-none">
+                <article>
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">What is Gratuity in India?</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                        Gratuity is a monetary benefit given by an employer to an employee for services rendered to the
+                        organization. It is governed by the <strong>Payment of Gratuity Act, 1972</strong>. This lump
+                        sum amount is usually paid at the time of retirement, resignation, or termination, provided the
+                        employee has completed a continuous service of <strong>5 years</strong> or more.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Tax Free Gratuity Limit 2026</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-4">
+                        The tax exemption on gratuity depends on whether you are a government or private employee:
+                    </p>
+                    <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 mb-6 space-y-2">
+                        <li><strong>Government Employees:</strong> The entire gratuity amount received is fully
+                            tax-exempt.</li>
+                        <li><strong>Private Employees (Covered by Act):</strong> The least of the following is exempt:
+                            <ul class="list-none pl-6 mt-1 text-sm text-slate-500 space-y-1">
+                                <li>1. Actual gratuity received</li>
+                                <li>2. ₹20 Lakhs (Maximum limit)</li>
+                                <li>3. 15 days salary × Number of completed years</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Gratuity Calculation Formula</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6">
+                        The formula for covered employees is: <code>(15 * Last Drawn Salary * Tenure) / 26</code>. Here,
+                        the salary includes Basic + DA, and the month is considered to have 26 working days.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Frequently Asked Questions (FAQ)</h2>
+                    <div class="space-y-4">
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Is the 5-year rule
+                                mandatory?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">Yes, broadly. However, in cases of death or
+                                disablement of the employee, the 5-year continuous service condition is waived off.</p>
+                        </div>
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Can an employer pay more
+                                than the formula?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">Yes, employers can voluntarily pay higher
+                                gratuity (ex-gratia), but the tax exemption is capped at ₹20 Lakhs. Any excess is
+                                taxable.</p>
+                        </div>
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Is gratuity taxable for
+                                contract employees?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">Contract employees are also eligible for
+                                gratuity if they complete 5 years on the rolls of the company, and the tax rules remain
+                                the same.</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  "mainEntity": [{
+                    "@type": "Question",
+                    "name": "Is the 5-year rule mandatory?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes, broadly. However, in cases of death or disablement of the employee, the 5-year continuous service condition is waived off."
+                    }
+                  }, {
+                    "@type": "Question",
+                    "name": "Can an employer pay more than the formula?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes, employers can voluntarily pay higher gratuity (ex-gratia), but the tax exemption is capped at ₹20 Lakhs. Any excess is taxable."
+                    }
+                  }, {
+                    "@type": "Question",
+                    "name": "Is gratuity taxable for contract employees?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Contract employees are also eligible for gratuity if they complete 5 years on the rolls of the company, and the tax rules remain the same."
+                    }
+                  }]
+                }
+                </script>
+        </div>
+
+        <div class="lg:col-span-1">
+            <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+        </div>
         </div>
     </main>
     <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About Us</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="disclaimer.html" class="hover:text-white transition">Disclaimer</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Use</a>
+            </div>
+            <p class="text-xs mt-4 text-slate-500">Professional Financial Tools for Indian Market.</p>
         </div>
     </footer>
 

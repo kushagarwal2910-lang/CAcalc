@@ -77,33 +77,114 @@
                         Set-off</button>
                 </div>
 
-                <div id="result-card"
-                    class="hidden bg-navy text-white p-6 rounded-xl shadow-xl border border-slate-700">
-                    <h2 class="text-xl font-semibold mb-4">Net Tax Payable in Cash</h2>
-                    <div class="grid grid-cols-3 gap-4 text-center">
-                        <div class="bg-slate-800 p-3 rounded">
-                            <p class="text-xs text-slate-400">IGST</p>
-                            <p class="text-lg font-bold text-emerald-400" id="net-igst">₹0</p>
+            </div>
+
+            <!-- SEO Content Section -->
+            <section
+                class="mt-12 bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300 prose dark:prose-invert max-w-none">
+                <article>
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Input Tax Credit (ITC) Rules 2026</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                        <strong>Input Tax Credit (ITC)</strong> is the backbone of the GST regime, avoiding the
+                        cascading effect of taxes. It allows you to reduce the tax you have already paid on inputs
+                        (purchases) from the tax payable on output (sales). To claim ITC, a business must strictly
+                        follow the conditions laid out in <strong>Section 16</strong> of the CGST Act.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">4 Mandatory Conditions to Claim ITC
+                    </h2>
+                    <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 mb-6 space-y-2">
+                        <li><strong>Possession of Tax Invoice:</strong> You must have a valid tax invoice or debit note
+                            issued by the supplier.</li>
+                        <li><strong>Receipt of Goods/Services:</strong> You must have actually received the goods or
+                            services.</li>
+                        <li><strong>Tax Paid to Government:</strong> The supplier must have paid the tax charged to the
+                            government (via their GSTR-3B).</li>
+                        <li><strong>Return Filed:</strong> You must have filed your return (GSTR-3B).</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Order of Utilization of ITC</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6">
+                        As per current rules, ITC must be set off in a specific order:
+                    </p>
+                    <ul class="list-decimal list-inside text-slate-600 dark:text-slate-300 mb-6 space-y-2">
+                        <li><strong>IGST Credit:</strong> First against IGST liability, then CGST, then SGST.</li>
+                        <li><strong>CGST Credit:</strong> First against CGST, then IGST (Cannot be used for SGST).</li>
+                        <li><strong>SGST Credit:</strong> First against SGST, then IGST (Cannot be used for CGST).</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Frequently Asked Questions (FAQ)</h2>
+                    <div class="space-y-4">
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Can I claim ITC on personal
+                                purchases?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">No, ITC is available only for goods/services
+                                used for <strong>business purposes</strong>. Personal use items are blocked credits u/s
+                                17(5).</p>
                         </div>
-                        <div class="bg-slate-800 p-3 rounded">
-                            <p class="text-xs text-slate-400">CGST</p>
-                            <p class="text-lg font-bold text-emerald-400" id="net-cgst">₹0</p>
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">What is the time limit to
+                                claim ITC?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">ITC for a financial year can be claimed up to
+                                30th November of the following year or the date of filing the Annual Return, whichever
+                                is earlier.</p>
                         </div>
-                        <div class="bg-slate-800 p-3 rounded">
-                            <p class="text-xs text-slate-400">SGST</p>
-                            <p class="text-lg font-bold text-emerald-400" id="net-sgst">₹0</p>
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Is ITC available on food
+                                and beverages?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">Generally, no (blocked u/s 17(5)), unless you
+                                are in the same business (e.g., catering) or it is obligatory under any law for the
+                                employer to provide it.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="lg:col-span-1">
-                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
-            </div>
+                </article>
+            </section>
+
+            <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  "mainEntity": [{
+                    "@type": "Question",
+                    "name": "Can I claim ITC on personal purchases?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "No, ITC is available only for goods/services used for business purposes. Personal use items are blocked credits u/s 17(5)."
+                    }
+                  }, {
+                    "@type": "Question",
+                    "name": "What is the time limit to claim ITC?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "ITC for a financial year can be claimed up to 30th November of the following year or the date of filing the Annual Return, whichever is earlier."
+                    }
+                  }, {
+                    "@type": "Question",
+                    "name": "Is ITC available on food and beverages?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Generally, no (blocked u/s 17(5)), unless you are in the same business (e.g., catering) or it is obligatory under any law for the employer to provide it."
+                    }
+                  }]
+                }
+                </script>
+        </div>
+        <div class="lg:col-span-1">
+            <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+        </div>
         </div>
     </main>
     <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About Us</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="disclaimer.html" class="hover:text-white transition">Disclaimer</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Use</a>
+            </div>
+            <p class="text-xs mt-4 text-slate-500">Professional Financial Tools for Indian Market.</p>
         </div>
     </footer>
 

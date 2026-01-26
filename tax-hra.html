@@ -90,29 +90,120 @@
                     <div id="error-msg" class="text-red-500 text-sm mt-2 hidden">Please enter valid values.</div>
                 </div>
 
-                <div id="result-card"
-                    class="hidden bg-navy text-white p-8 rounded-xl shadow-xl border border-slate-700">
-                    <h2 class="text-xl font-semibold mb-6 border-b border-slate-600 pb-2">HRA Calculation</h2>
-                    <div class="space-y-4 text-sm">
-                        <div class="flex justify-between items-center"><span class="text-slate-400">Total HRA
-                                Received</span><span class="text-white" id="res-received">₹0</span></div>
-                        <div class="flex justify-between items-center"><span class="text-emerald-400">Exempt HRA (Least
-                                of 3)</span><span class="text-emerald-400 font-bold" id="res-exempt">₹0</span></div>
-                        <div class="flex justify-between items-center pt-2 border-t border-slate-700"><span
-                                class="text-slate-300">Taxable HRA</span><span class="text-white font-bold"
-                                id="res-taxable">₹0</span></div>
-                    </div>
-                </div>
             </div>
 
-            <div class="lg:col-span-1">
-                <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
-            </div>
+            <!-- SEO Content Section -->
+            <section
+                class="mt-12 bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300 prose dark:prose-invert max-w-none">
+                <article>
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Understanding HRA Exemption in India
+                    </h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                        House Rent Allowance (HRA) is a common component of salary structures in India. Under
+                        <strong>Section 10(13A)</strong> of the Income Tax Act, salaried individuals can claim an
+                        exemption on this allowance if they live in rented accommodation. This <strong>HRA Exemption
+                            Calculator</strong> helps you determine the exact amount of tax-free HRA based on your
+                        salary and rent paid.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">HRA Exemption Rules: Metro vs
+                        Non-Metro</h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-4">
+                        The exemption amount is the <strong>least</strong> of the following three conditions:
+                    </p>
+                    <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 mb-6 space-y-2">
+                        <li><strong>Actual HRA Received:</strong> The amount your employer pays you as HRA.</li>
+                        <li><strong>Rent Paid - 10% of Salary:</strong> The actual rent you pay minus 10% of your Basic
+                            + DA.</li>
+                        <li><strong>50% or 40% of Salary:</strong> 50% of (Basic + DA) if you live in a <strong>Metro
+                                city</strong> (Delhi, Mumbai, Kolkata, Chennai), or 40% for any other non-metro city.
+                        </li>
+                    </ul>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6">
+                        For example, living in Bangalore or Hyderabad (Non-Metro for HRA purposes) restricts the limit
+                        to 40%, whereas Mumbai allows 50%.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">How to Claim HRA While Filing ITR?
+                    </h2>
+                    <p class="text-slate-600 dark:text-slate-300 mb-6">
+                        You generally submit your rent receipts and PAN of the landlord (if rent > ₹1 Lakh/year) to your
+                        employer. They adjust it in Form 16. If you missed submitting proof to your employer, you can
+                        claim the exemption directly while filing your ITR by recalculating it here.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-navy dark:text-white mb-4">Frequently Asked Questions (FAQ)</h2>
+                    <div class="space-y-4">
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Can I claim both HRA and
+                                Home Loan Deduction?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">Yes, if you own a house (and pay a loan) but
+                                live in a different rented house for work reasons, you can claim both HRA exemption and
+                                home loan interest deduction (Section 24).</p>
+                        </div>
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Is Bangalore considered a
+                                Metro city for HRA?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">No, for income tax purposes, only Delhi,
+                                Mumbai, Kolkata, and Chennai are Metro cities (50% rule). Bangalore, Hyderabad, Pune,
+                                etc., fall under the 40% rule.</p>
+                        </div>
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                            <h3 class="font-semibold text-lg text-navy dark:text-white mb-2">Do I need my landlord's
+                                PAN?</h3>
+                            <p class="text-slate-600 dark:text-slate-300">Yes, if your annual rent exceeds ₹1,00,000,
+                                quoting the landlord's PAN is mandatory to claim HRA exemption.</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  "mainEntity": [{
+                    "@type": "Question",
+                    "name": "Can I claim both HRA and Home Loan Deduction?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes, if you own a house (and pay a loan) but live in a different rented house for work reasons, you can claim both HRA exemption and home loan interest deduction (Section 24)."
+                    }
+                  }, {
+                    "@type": "Question",
+                    "name": "Is Bangalore considered a Metro city for HRA?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "No, for income tax purposes, only Delhi, Mumbai, Kolkata, and Chennai are Metro cities (50% rule). Bangalore, Hyderabad, Pune, etc., fall under the 40% rule."
+                    }
+                  }, {
+                    "@type": "Question",
+                    "name": "Do I need my landlord's PAN?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes, if your annual rent exceeds ₹1,00,000, quoting the landlord's PAN is mandatory to claim HRA exemption."
+                    }
+                  }]
+                }
+                </script>
+        </div>
+
+        <div class="lg:col-span-1">
+            <div class="ad-placeholder w-full h-64 rounded-lg sticky top-8"></div>
+        </div>
         </div>
     </main>
     <footer class="bg-navy text-slate-400 py-8 mt-12 border-t border-slate-700 no-print">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; 2026 CAcalc. All rights reserved.</p><p class="text-xs mt-2 opacity-70">Disclaimer: For educational purposes only. Consult a CA before filing.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">About Us</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="disclaimer.html" class="hover:text-white transition">Disclaimer</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Use</a>
+            </div>
+            <p class="text-xs mt-4 text-slate-500">Professional Financial Tools for Indian Market.</p>
         </div>
     </footer>
 
